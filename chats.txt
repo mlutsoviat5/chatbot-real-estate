@@ -1,0 +1,10 @@
+Hi
+Bot: Hi
+Hello
+Bot: Hello
+How are you
+Bot: I am fine...How are you?
+I am fine
+Bot: Great !! How may I help you today?
+Bye
+Bot: Bye Bye !!

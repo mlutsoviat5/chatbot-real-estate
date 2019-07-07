@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="chatbox">
+<p><span>Chat Bot</span></p>
+</div>
+<div id="userInput">
+<input id="textInput" type="text" name="msg" placeholder="Message">
+<input id="buttonInput" type="submit" value="Send">
+</div>
+<div id="temp"></div>
+<script>
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+		  //alert(rawText);
+          var userHtml = '<p class="userText"><span>'+'You: ' + rawText + '</span></p>';
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+          $.ajax({
+		    type:'GET',
+			ContentType:'application/json;charset=utf-8',			
+			url:'http://localhost:5000?textMessage='+rawText,			
+			success: function(result,status,xhr){	
+            //alert(result);			
+            var botHtml = '<p class="botText"><span>' + result + '</span></p>';
+			console.log("success:"+result);
+            $("#chatbox").append(botHtml);
+            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+			},
+			error: function(xhr,status,error){
+			alert(error);
+			
+			}
+			
+			
+			
+          });
+        }
+        $("#textInput").keypress(function(e) {
+            if(e.which == 13) {
+                getBotResponse();
+				$("#textInput").val("");
+            }
+        });
+        $("#buttonInput").click(function() {
+          getBotResponse();
+		  $("#textInput").val("");
+        })
+      </script>
+
+</body>
+</html>
